@@ -9,7 +9,7 @@ def is_resnet(name):
 	:return:
 	"""
 	name = name.lower()
-	return name.startswith('resnet')
+	return name.startswith('resnet')			# if name startswith resnet, then return true, else return false
 
 
 def create_cnn_model(name, dataset="cifar100", use_cuda=False):
