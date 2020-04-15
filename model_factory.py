@@ -21,14 +21,14 @@ def create_cnn_model(name, dataset="cifar100", use_cuda=False):
 	"""
 	num_classes = 100 if dataset == 'cifar100' else 10
 	model = None
-	if is_resnet(name):
+	if is_resnet(name):							# model name starts with resenet
 		resnet_size = name[6:]
-		resnet_model = resnet_book.get(resnet_size)(num_classes=num_classes)
+		resnet_model = resnet_book.get(resnet_size)(num_classes=num_classes)												# defined on resnet_cifar.py
 		model = resnet_model
 		
-	else:
+	else:										# model name does not starts with resnet
 		plane_size = name[5:]
-		model_spec = plane_cifar10_book.get(plane_size) if num_classes == 10 else plane_cifar100_book.get(plane_size)
+		model_spec = plane_cifar10_book.get(plane_size) if num_classes == 10 else plane_cifar100_book.get(plane_size)		# defined on plain_cnn_cifar.py
 		plane_model = ConvNetMaker(model_spec)
 		model = plane_model
 
