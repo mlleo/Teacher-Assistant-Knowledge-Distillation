@@ -13,13 +13,13 @@ def get_cifar(num_classes=100, dataset_dir='./data', batch_size=128, crop=False)
 	:param crop: whether or not use randomized horizontal crop, default to False
 	:return:
 	"""
-	normalize = transforms.Normalize(mean=[0.507, 0.487, 0.441], std=[0.267, 0.256, 0.276])
+	normalize = transforms.Normalize(mean=[0.507, 0.487, 0.441], std=[0.267, 0.256, 0.276])			# normalize a tensor image with mean and standard deviation (R,G,B)
 	simple_transform = transforms.Compose([transforms.ToTensor(), normalize])
 	
-	if crop is True:
+	if crop is True:												# OPTIONAL FOR Data augmentation (just for train data)
 		train_transform = transforms.Compose([
-			transforms.RandomCrop(32, padding=4),
-			transforms.RandomHorizontalFlip(),
+			transforms.RandomCrop(32, padding=4),					# crop the given image at a random location with 32 * 32 size
+			transforms.RandomHorizontalFlip(),						# horizontally flip the given image randomly with a given probability (defalut = 0.5)
 			transforms.ToTensor(),
 			normalize
 		])
