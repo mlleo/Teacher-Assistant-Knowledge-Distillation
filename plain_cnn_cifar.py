@@ -12,7 +12,7 @@ class ConvNetMaker(nn.Module):
 	"""
 	Creates a simple (plane) convolutional neural network
 	"""
-	def __init__(self, layers):
+	def __init__(self, layers):								# parameter "layers" will be provided by the list from model_factory.py
 		"""
 		Makes a cnn using the provided list of layers specification
 		The details of this list is available in the paper
@@ -26,18 +26,18 @@ class ConvNetMaker(nn.Module):
 		previous_layer_size = h * w * d
 		num_fc_layers_remained = len([1 for l in layers if l.startswith('FC')])
 		for layer in layers:
-			if layer.startswith('Conv'):
+			if layer.startswith('Conv'):						# conv layer
 				filter_count = int(layer[4:])
 				self.conv_layers += [nn.Conv2d(previous_layer_filter_count, filter_count, kernel_size=3, padding=1),
 									 nn.BatchNorm2d(filter_count), nn.ReLU(inplace=True)]
 				previous_layer_filter_count = filter_count
 				d = filter_count
 				previous_layer_size = h * w * d
-			elif layer.startswith('MaxPool'):
+			elif layer.startswith('MaxPool'):					# MaxPooling layer
 				self.conv_layers += [nn.MaxPool2d(kernel_size=2, stride=2)]
 				h, w = int(h / 2.0), int(w / 2.0)
 				previous_layer_size = h * w * d
-			elif layer.startswith('FC'):
+			elif layer.startswith('FC'):						# Fully connected layer
 				num_fc_layers_remained -= 1
 				current_layer_size = int(layer[2:])
 				if num_fc_layers_remained == 0:
